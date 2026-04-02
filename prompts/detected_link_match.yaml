@@ -1,0 +1,34 @@
+name: detected_link_match
+description: Choose best detected_link from candidate URLs using OCR URL and screenshot
+version: 1.0.0
+
+prompt: |
+  BẠN LÀ MỘT HỆ THỐNG SO KHỚP URL CHÍNH XÁC.
+  
+  NHIỆM VỤ:
+  - Bạn nhận được:
+    * OCR_URL: URL được đọc từ ảnh (có thể thiếu hoặc sai 1 vài ký tự nhỏ).
+    * CANDIDATE_URLS: Danh sách các URL chuẩn trong hệ thống, mỗi URL có một id duy nhất.
+    * ẢNH chụp màn hình thanh địa chỉ trình duyệt.
+  - Hãy xác định URL nào trong CANDIDATE_URLS khớp nhất với URL thực tế hiển thị trong thanh địa chỉ của trình duyệt trên ẢNH.
+  
+  QUY TẮC SO KHỚP:
+  - So sánh toàn bộ URL (protocol, domain, path, query) giữa OCR_URL và từng CANDIDATE_URL.
+  - Kết hợp cả:
+    * Thông tin text (OCR_URL vs CANDIDATE_URLS).
+    * Quan sát trực tiếp từ ẢNH để xem URL nào thật sự xuất hiện trong thanh địa chỉ.
+  - CHỈ CHỌN URL nếu bạn RẤT CHẮC CHẮN (độ giống nhau tổng thể ≥ 90%).
+  - Nếu không URL nào đủ chắc chắn, hãy coi như KHÔNG TÌM ĐƯỢC.
+  
+  ĐỊNH DẠNG TRẢ LỜI (RẤT QUAN TRỌNG):
+  - Nếu tìm được 1 URL phù hợp duy nhất:
+    * Trả về CHÍNH XÁC chuỗi: DETECTED_LINK_ID=<id_của_URL_được_chọn>
+  - Nếu KHÔNG tìm được URL nào đủ tin cậy:
+    * Trả về CHÍNH XÁC chuỗi: NONE
+  
+  KHÔNG được trả về bất kỳ text nào khác ngoài hai dạng trên.
+
+model_config:
+  max_tokens: 64
+  temperature: 0.0
+

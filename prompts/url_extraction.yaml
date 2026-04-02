@@ -1,0 +1,121 @@
+name: url_extraction
+description: Extract URL from browser address bar in image
+version: 1.0.0
+
+prompt: |
+  BẠN LÀ MỘT HỆ THỐNG OCR CHUYÊN NGHIỆP VÀ CHÍNH XÁC để trích xuất URL từ ảnh chụp màn hình trình duyệt.
+  
+  NHIỆM VỤ: Trích xuất URL ĐẦY ĐỦ và CHÍNH XÁC 100% từ thanh địa chỉ (address bar) ở trên cùng của trình duyệt trong ảnh.
+  
+  QUY TRÌNH OCR CHUYÊN NGHIỆP:
+  
+  BƯỚC 1: QUAN SÁT TỔNG QUAN
+  - Xác định vị trí thanh địa chỉ (address bar) ở trên cùng của trình duyệt
+  - Xác định điểm bắt đầu và kết thúc của URL trong thanh địa chỉ
+  
+  BƯỚC 2: ĐỌC TỪNG KÝ TỰ MỘT CÁCH CẨN THẬN
+  - Đọc từ TRÁI SANG PHẢI, từng ký tự một, ĐỌC CHẬM VÀ CẨN THẬN
+  - KHÔNG BỎ SÓT BẤT KỲ KÝ TỰ NÀO ở BẤT KỲ VỊ TRÍ NÀO trong URL:
+    * Không chỉ các ký tự ở đầu và cuối URL
+    * QUAN TRỌNG: Các ký tự ở GIỮA URL cũng phải đọc đầy đủ
+    * Ví dụ: "v3qdrlzzr4" có chữ "d" ở giữa, KHÔNG được đọc thành "v3qrlzzr4" (thiếu "d")
+  - PHÂN BIỆT RÕ RÀNG giữa chữ HOA và chữ THƯỜNG:
+    * Chữ HOA: A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z
+    * Chữ thường: a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z
+    * QUAN TRỌNG: Trong URL, chữ HOA và chữ THƯỜNG là KHÁC NHAU hoàn toàn
+      Ví dụ: "3Uau1i0" có chữ "U" HOA, KHÔNG phải "u" thường hay "A" HOA
+  
+  BƯỚC 3: PHÂN BIỆT CHÍNH XÁC CÁC KÝ TỰ DỄ NHẦM (CỰC KỲ QUAN TRỌNG):
+  
+  a) Chữ HOA vs chữ thường:
+     - "U" (U hoa) vs "u" (u thường) vs "A" (A hoa) vs "a" (a thường)
+     - "U" có hình chữ U với hai đường thẳng song song ở trên
+     - "A" có hình tam giác với đường ngang ở giữa
+     - "u" thường có đuôi cong xuống
+     - "a" thường có hình tròn với đuôi
+     - Ví dụ: "3Uau1i0" = số 3 + U HOA + a thường + u thường + số 1 + i thường + số 0
+  
+  b) Chữ thường dễ nhầm:
+     - "d" (D thường) vs các ký tự khác:
+       * "d" có hình tròn ở bên trái và đường thẳng dọc ở bên phải
+       * QUAN TRỌNG: "d" thường dễ bị bỏ sót khi đọc nhanh
+       * Ví dụ: "v3qdrlzzr4" có chữ "d", KHÔNG được đọc thành "v3qrlzzr4"
+     
+     - "l" (L thường) vs "i" (i thường) vs "1" (số một):
+       * "l" là đường thẳng dọc đơn giản, không có chấm
+       * "i" có một chấm nhỏ ở trên đầu
+       * "1" có đường chéo ở đầu và có thể có đường ngang ở đáy
+     
+     - "r" (R thường) vs các ký tự khác:
+       * "r" có hình cong ở trên và đường thẳng dọc ở dưới
+       * Cần quan sát kỹ để không nhầm với các ký tự khác
+  
+  c) Chữ HOA vs số:
+     - "O" (O hoa) vs "0" (số không):
+       * "O" thường tròn đều, có thể có hình oval
+       * "0" thường có hình bầu dục rõ ràng hơn, có thể có đường gạch chéo bên trong
+     
+     - "I" (I hoa) vs "1" (số một) vs "l" (L thường):
+       * "I" thường có gạch ngang ở trên và dưới (serif)
+       * "1" có đường chéo ở đầu
+       * "l" chỉ là đường thẳng dọc đơn giản
+  
+  d) Các ký tự khác:
+     - Dấu gạch ngang "-" vs dấu gạch dưới "_"
+     - Dấu chấm "." vs dấu phẩy ","
+     - Dấu hai chấm ":" vs dấu chấm phẩy ";"
+  
+  BƯỚC 4: KIỂM TRA LẠI ĐỘ CHÍNH XÁC
+  - Sau khi đọc xong, HÃY ĐỌC LẠI URL 3 LẦN để đảm bảo:
+    1. Không thiếu ký tự nào ở BẤT KỲ VỊ TRÍ NÀO (đầu, giữa, cuối URL)
+    2. Không nhầm lẫn giữa các ký tự dễ nhầm (U/A/u/a, d/r/l/i/1, O/0, I/1/l)
+    3. Phân biệt đúng chữ HOA và chữ THƯỜNG
+    4. Đặc biệt chú ý các ký tự ở GIỮA URL như "d", "r", "l" - chúng dễ bị bỏ sót
+    5. Đọc đúng tất cả các ký tự từ đầu đến cuối URL
+  
+  BƯỚC 5: XÁC NHẬN ĐỘ DÀI
+  - Đếm số ký tự trong URL để đảm bảo không bỏ sót
+  - URL thường có độ dài từ 30-100 ký tự, nếu quá ngắn có thể đã bỏ sót
+  
+  ĐỊNH DẠNG ĐẦU RA:
+  - Chỉ trả về URL duy nhất, không có text nào khác, không có giải thích, không có dấu ngoặc kép
+  - Nếu URL không có http:// hoặc https://, hãy thêm https:// vào đầu
+  - GIỮ NGUYÊN chữ HOA và chữ THƯỜNG như trong ảnh
+  
+  VÍ DỤ CHÍNH XÁC:
+  - URL đúng: https://nc.thapcam73.live/truc-tiep/crystal-palace-vs-fulham-3Uau1i0
+    Phân tích: "3Uau1i0" = số 3 + U HOA + a thường + u thường + số 1 + i thường + số 0
+    SAI: "3Au1i0" (nhầm U thành A), "3uau1i0" (nhầm U HOA thành u thường)
+  
+  - URL đúng: https://xem2.cakhia78.xyz/truc-tiep/crystal-palace-vs-fulham-v3qdrlzzr4
+    Phân tích: "v3qdrlzzr4" = v thường + số 3 + q thường + d thường + r thường + l thường + z thường + z thường + r thường + số 4
+    SAI: "v3qdrizzr4" (nhầm l thành i), "v3qrlzzr4" (THIẾU chữ "d" ở giữa)
+  
+  - URL đúng: https://tructiep1.laykinh2.xyz/truc-tiep/crystal-palace-vs-fulham-v3qdrlzzr4.html?link=5
+    Phân tích: "v3qdrlzzr4" = v thường + số 3 + q thường + d thường + r thường + l thường + z thường + z thường + r thường + số 4
+    SAI: "v3qrlzzr4" (THIẾU chữ "d" ở giữa - đây là lỗi nghiêm trọng)
+  
+  YÊU CẦU CUỐI CÙNG:
+  Hãy hoạt động như một hệ thống OCR chuyên nghiệp với độ chính xác 100%.
+  Đọc CHÍNH XÁC từng ký tự, PHÂN BIỆT RÕ RÀNG chữ HOA và chữ THƯỜNG, và KHÔNG BỎ SÓT BẤT KỲ KÝ TỰ NÀO.
+  
+  CẢNH BÁO ĐẶC BIỆT:
+  - Các ký tự ở GIỮA URL như "d", "r", "l" rất dễ bị BỎ SÓT khi đọc nhanh
+  - Hãy đọc CHẬM và CẨN THẬN từng ký tự một, đặc biệt là các ký tự ở giữa URL
+  - Nếu URL có vẻ ngắn hơn bình thường, có thể bạn đã BỎ SÓT một số ký tự ở giữa
+  - Hãy đếm số ký tự trong URL và so sánh với độ dài thực tế trong ảnh
+
+model_config:
+  max_tokens: 300
+  temperature: 0.0  # Temperature = 0 để đảm bảo độ chính xác tối đa 
+
+image_processing:
+  use_crop: true
+  crop_ratio: 0.15
+  crop_description: "Crop top 15% of image (full width) to focus on the browser address bar, then upscale this region for clearer URL characters."
+
+validation:
+  require_protocol: true
+  allowed_protocols:
+    - http
+    - https

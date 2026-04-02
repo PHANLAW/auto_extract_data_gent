@@ -1,0 +1,79 @@
+OCR Debug Info for: Ảnh chụp màn hình (3152)
+================================================================================
+
+Original image: data\02.01.26 00_30 PL 25_26 Crystal Palace - Fulham\Ảnh chụp màn hình (3152).png
+Original size: 1920x1080px
+Crop ratio: 15.0%
+Crop height: 162px
+Cropped size: 1920x162px
+Upscaled size: 4740x400px (scale=2.47x)
+
+================================================================================
+GCV OCR DETAILS:
+================================================================================
+Full text read by GCV (267 chars):
+←
+Week 01 202 × 02.01.26 00:3 ×
+90PHUT X
+Crystal P: 4 x Xoilac7, Xem × | TV Xoilac TV-X x
+90Phut TV| × | Vaoroi - XemX |
+colalive.phot x
+Xoilac TV - XX | o Giovang TV - X | 3 Cakeo TV trị x | +
+→ C
+littlelinguistshop.co.uk
+☆
+U e ✰ | =
+K Công việc
+9 PHUT
+90PHUTTVV.NET
+
+URL candidates found in OCR text:
+  1. Position 121: colalive.phot
+     Context: ...0Phut TV| × | Vaoroi - XemX |
+colalive.phot x
+Xoilac TV - XX | o Giovang ...
+  2. Position 198: littlelinguistshop.co.uk
+     Context: ... X | 3 Cakeo TV trị x | +
+→ C
+littlelinguistshop.co.uk
+☆
+U e ✰ | =
+K Công việc
+9 PHU...
+  3. Position 254: 90PHUTTVV.NET
+     Context: ...
+U e ✰ | =
+K Công việc
+9 PHUT
+90PHUTTVV.NET...
+
+
+================================================================================
+AGENT VALIDATION (NEW WORKFLOW):
+================================================================================
+OCR text sent to agent: 267 chars
+Cropped image sent to agent: C:\Users\acer\AppData\Local\Temp\temp_crop_k8kblh3n.png
+✅ Agent validated URL: https://littlinguistshop.co.uk/
+   → Agent confirmed this URL is from address bar
+
+================================================================================
+FINAL RESULT:
+================================================================================
+Final URL: https://littlinguistshop.co.uk/
+
+================================================================================
+WORKFLOW SUMMARY:
+================================================================================
+1. Web detection: ✅ Passed
+2. Crop image: ✅ 162px (15.0%)
+3. Upscale: ✅ 2.47x
+4. GCV OCR: ✅ (267 chars)
+5. Agent Validation: ✅ (https://littlinguistshop.co.uk/)
+6. Final URL: ✅ (https://littlinguistshop.co.uk/)
+
+================================================================================
+OUTPUT FILES:
+================================================================================
+Cropped image: debug_output\Ảnh chụp màn hình (3152)_crop_162px.png
+Upscaled image: debug_output\Ảnh chụp màn hình (3152)_upscaled_4740x400px.png
+Debug log: debug_output\Ảnh chụp màn hình (3152)_debug.txt

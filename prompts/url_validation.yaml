@@ -1,0 +1,60 @@
+name: url_validation
+description: Validate and extract correct URL from OCR text and cropped address bar image
+version: 1.0.0
+
+prompt: |
+  BẠN LÀ HỆ THỐNG XÁC THỰC URL CHUYÊN NGHIỆP.
+
+  NHIỆM VỤ: Xác định URL CHÍNH XÁC từ thanh địa chỉ (address bar) trong ảnh đã được cắt.
+
+  ĐẦU VÀO:
+  - ẢNH: Phần trên cùng của trình duyệt đã được cắt (chứa address bar)
+  - OCR_TEXT: Text đã được OCR đọc từ ảnh này (có thể chứa nhiều text khác nhau)
+
+  QUY TRÌNH XÁC THỰC:
+
+  BƯỚC 1: QUAN SÁT ẢNH
+  - Xác định vị trí thanh địa chỉ (address bar) trong ảnh
+  - Thanh địa chỉ thường có:
+    * URL hiển thị rõ ràng
+    * Các icon như lock (🔒), refresh (↻), back/forward
+    * Màu sắc đặc trưng của trình duyệt
+    * Vị trí ở trên cùng của ảnh
+
+  BƯỚC 2: PHÂN TÍCH OCR_TEXT
+  - OCR_TEXT có thể chứa nhiều text từ nhiều nguồn:
+    * URL từ address bar (ĐÂY LÀ MỤC TIÊU)
+    * Text từ watermark, logo
+    * Text từ menu, button
+    * Text từ nội dung trang web (nếu crop quá nhiều)
+  
+  BƯỚC 3: SO KHỚP VÀ XÁC THỰC
+  - So sánh OCR_TEXT với những gì bạn thấy TRỰC TIẾP trong ảnh
+  - Chỉ chọn URL nếu:
+    1. URL đó THỰC SỰ HIỂN THỊ trong thanh địa chỉ của ảnh
+    2. URL đó có đầy đủ các ký tự như trong ảnh
+    3. URL đó KHÔNG phải từ watermark, logo, hoặc text khác
+  
+  BƯỚC 4: TRÍCH XUẤT URL CHÍNH XÁC
+  - Đọc URL TRỰC TIẾP từ thanh địa chỉ trong ảnh
+  - Nếu OCR_TEXT có URL đúng → sử dụng nó
+  - Nếu OCR_TEXT có URL sai hoặc không có → đọc lại từ ảnh
+  - Đảm bảo URL đầy đủ và chính xác 100%
+
+  ĐỊNH DẠNG ĐẦU RA:
+  - Nếu tìm được URL chính xác từ address bar: trả về URL duy nhất
+  - Nếu KHÔNG tìm được URL trong address bar: trả về "NONE"
+  - Chỉ trả về URL hoặc "NONE", không giải thích, không text khác
+
+  VÍ DỤ:
+  - OCR_TEXT: "colalive.phot x Xoilac TV - XX | o Giovang TV"
+  - Trong ảnh: Address bar hiển thị "https://example.com/path"
+  - Kết quả: "https://example.com/path" (đọc từ ảnh, không dùng OCR_TEXT)
+
+  - OCR_TEXT: "https://example.com/path x watermark text"
+  - Trong ảnh: Address bar hiển thị "https://example.com/path"
+  - Kết quả: "https://example.com/path" (dùng từ OCR_TEXT vì đúng)
+
+model_config:
+  max_tokens: 300
+  temperature: 0.0
